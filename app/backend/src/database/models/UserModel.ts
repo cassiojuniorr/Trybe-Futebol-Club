@@ -6,6 +6,7 @@ export default class UserModel extends Model {
   declare username: string;
   declare email: string;
   declare password: string;
+  userModel = new UserModel();
 }
 
 UserModel.init({
