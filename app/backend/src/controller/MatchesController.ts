@@ -20,7 +20,7 @@ export default class MatchesController {
   }
 
   static async update(req: Request, res: Response) {
-    const { id } = req.query;
+    const { id } = req.params;
 
     await MatchesService.update(id as string, req.body);
 
@@ -28,7 +28,7 @@ export default class MatchesController {
   }
 
   static async finish(req: Request, res: Response) {
-    const { id } = req.query;
+    const { id } = req.params;
 
     const message = await MatchesService.finish(id as string);
 
