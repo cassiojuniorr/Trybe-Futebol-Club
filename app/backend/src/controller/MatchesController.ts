@@ -22,9 +22,9 @@ export default class MatchesController {
   static async update(req: Request, res: Response) {
     const { id } = req.params;
 
-    await MatchesService.update(id as string, req.body);
+    const upt = await MatchesService.update(id as string, req.body);
 
-    res.status(200).end();
+    res.status(200).json(upt);
   }
 
   static async finish(req: Request, res: Response) {

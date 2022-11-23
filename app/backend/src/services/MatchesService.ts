@@ -47,17 +47,17 @@ export default class MatchesService {
     return match as unknown as INewMatch;
   }
 
-  static async update(id: string, update: IUpdate): Promise<void> {
+  static async update(id: string, update: IUpdate): Promise<IMatches> {
     const { homeTeamGoals, awayTeamGoals } = update;
-    const match = await MatchesModel.findByPk(id);
+    const match = await MatchesModel.findByPk(id) as unknown as IMatches;
 
     if (!match) {
       throw new HttpException(404, 'There is no team with such id!');
     }
-    const result = match.dataValues as unknown as IMatches;
 
-    result.homeTeamGoals = homeTeamGoals;
-    result.awayTeamGoals = awayTeamGoals;
+    await MatchesModel.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+
+    return match;
   }
 
   static async finish(id: string): Promise<string> {
