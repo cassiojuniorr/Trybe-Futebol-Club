@@ -12,7 +12,7 @@ export default class UserService {
       throw new HttpException(401, 'invalid fields');
     }
 
-    if (!email) {
+    if (!email || !password) {
       throw new HttpException(400, 'All fields must be filled');
     }
 
