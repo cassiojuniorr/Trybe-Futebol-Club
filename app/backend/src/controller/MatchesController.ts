@@ -19,6 +19,14 @@ export default class MatchesController {
     res.status(201).json(newMatch);
   }
 
+  static async update(req: Request, res: Response) {
+    const { id } = req.query;
+
+    await MatchesService.update(id as string, req.body);
+
+    res.status(200).end();
+  }
+
   static async finish(req: Request, res: Response) {
     const { id } = req.query;
 

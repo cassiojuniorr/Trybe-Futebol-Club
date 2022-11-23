@@ -21,4 +21,9 @@ interface INewMatch {
   inProgress?: boolean,
 }
 
-export { IMatches, INewMatch };
+interface IUpdate {
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+}
+
+export { IMatches, INewMatch, IUpdate };

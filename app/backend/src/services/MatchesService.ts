@@ -1,7 +1,7 @@
 import HttpException from '../interfaces/HttpException';
 import TeamsModel from '../database/models/TeamsModel';
 import MatchesModel from '../database/models/MatchesModel';
-import { IMatches, INewMatch } from '../interfaces/matchesInterface';
+import { IMatches, INewMatch, IUpdate } from '../interfaces/matchesInterface';
 
 export default class MatchesService {
   static async getAll(query: string): Promise<IMatches[]> {
@@ -45,6 +45,18 @@ export default class MatchesService {
     });
 
     return match as unknown as INewMatch;
+  }
+
+  static async update(id: string, update: IUpdate) {
+    const { homeTeamGoals, awayTeamGoals } = update;
+    const match = MatchesModel.findByPk(id) as unknown as IMatches;
+
+    if (!match) {
+      throw new HttpException(404, 'There is no team with such id!');
+    }
+
+    match.homeTeamGoals = homeTeamGoals;
+    match.awayTeamGoals = awayTeamGoals;
   }
 
   static async finish(id: string): Promise<string> {
