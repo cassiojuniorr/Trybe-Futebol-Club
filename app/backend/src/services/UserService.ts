@@ -8,12 +8,16 @@ export default class UserService {
     const { email, password } = login;
     const user = await UserModel.findOne({ where: { email } });
 
-    if (!user || user.password !== password) {
-      throw new HttpException(401, 'invalid fields');
+    if (!user) {
+      throw new HttpException(401, 'User not Found');
     }
 
     if (!email || !password) {
       throw new HttpException(400, 'All fields must be filled');
+    }
+
+    if (user.email !== email || user.password !== password) {
+      throw new HttpException(401, 'Incorrect email or password');
     }
 
     const token = jwt.createToken(email);
