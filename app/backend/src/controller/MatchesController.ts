@@ -12,19 +12,32 @@ export default class MatchesController {
 
   static async insert(req: Request, res: Response) {
     const { authorization } = req.headers;
+    if (!authorization) {
+      return res.status(400).json({ message: 'Need Token' });
+    }
 
-    jwtUtil.validateToken(authorization as string);
-    const newMatch = await MatchesService.insert(req.body);
+    const result = jwtUtil.validateToken(authorization);
+    if (result.type) {
+      return res.status(result.status).json({ message: result.message });
+    }
 
-    res.status(201).json(newMatch);
+    const { type, message, status } = await MatchesService.insert(req.body);
+    if (type) {
+      return res.status(status).json({ message });
+    }
+
+    res.status(status).json(message);
   }
 
   static async update(req: Request, res: Response) {
     const { id } = req.params;
 
-    const upt = await MatchesService.update(id as string, req.body);
+    const { type, message, status } = await MatchesService.update(id as string, req.body);
+    if (type) {
+      return res.status(status).json({ message });
+    }
 
-    res.status(200).json(upt);
+    res.status(status).json({ message });
   }
 
   static async finish(req: Request, res: Response) {

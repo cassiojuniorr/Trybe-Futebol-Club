@@ -4,16 +4,22 @@ import UserService from '../services/UserService';
 export default class UserController {
   static async login(req: Request, res: Response) {
     const { email, password } = req.body;
-    const token = await UserService.login({ email, password });
+    const { type, message, status } = await UserService.login({ email, password });
+    if (type) {
+      return res.status(status).json({ message });
+    }
 
-    res.status(200).json({ token });
+    res.status(status).json({ token: message });
   }
 
   static async loginVal(req: Request, res: Response) {
     const { authorization } = req.headers;
 
-    const role = await UserService.loginVal(authorization as string);
+    const { type, message, status } = await UserService.loginVal(authorization as string);
+    if (type) {
+      return res.status(status).json({ message });
+    }
 
-    res.status(200).json(role);
+    res.status(status).json({ role: message });
   }
 }

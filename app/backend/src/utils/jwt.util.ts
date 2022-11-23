@@ -1,12 +1,13 @@
 import jwt = require('jsonwebtoken');
-import HttpException from '../interfaces/HttpException';
+import IReturn from '../interfaces/returnInterface';
+// import HttpException from '../interfaces/HttpException';
 
 require('dotenv/config');
 
 const secret: jwt.Secret = process.env.JWT_SECRET as string;
 
-const createToken = (data: string) => {
-  const token = jwt.sign({ data }, secret, {
+const createToken = (id: number) => {
+  const token = jwt.sign({ data: { id } }, secret, {
     expiresIn: '1d',
     algorithm: 'HS256',
   });
@@ -14,13 +15,14 @@ const createToken = (data: string) => {
   return token;
 };
 
-const validateToken = (token: string) => {
+const validateToken = (token: string): IReturn => {
   try {
-    const result = jwt.verify(token, secret);
+    const result = jwt.decode(token) as jwt.JwtPayload;
 
-    return result;
+    return { type: null, message: result.data.id, status: 0 };
   } catch (_err) {
-    throw new HttpException(401, 'Token must be a valid token');
+    // throw new HttpException(401, 'Token must be a valid token');
+    return { type: 'TokenErro', message: 'Token must be a valid token', status: 401 };
   }
 };
 
