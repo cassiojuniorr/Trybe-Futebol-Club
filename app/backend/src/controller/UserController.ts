@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import HttpException from '../interfaces/HttpException';
 import UserService from '../services/UserService';
 
 export default class UserController {
@@ -13,11 +12,7 @@ export default class UserController {
   static async loginVal(req: Request, res: Response) {
     const { authorization } = req.headers;
 
-    if (!authorization) {
-      throw new HttpException(401, 'Need pass one Token');
-    }
-
-    const role = await UserService.loginVal(authorization);
+    const role = await UserService.loginVal(authorization as string);
 
     res.status(200).json(role);
   }

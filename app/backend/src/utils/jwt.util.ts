@@ -20,7 +20,7 @@ const validateToken = (token: string) => {
 
     return result;
   } catch (_err) {
-    throw new HttpException(401, 'Token expired or invalid');
+    throw new HttpException(401, 'Token must be a valid token');
   }
 };
 
