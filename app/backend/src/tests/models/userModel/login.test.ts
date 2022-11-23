@@ -17,21 +17,19 @@ const { app } = new App();
 const { expect } = chai;
 
 describe('Login', () => {
-  // const userModel = new UserModel();
 
-  it('Right Login', () => {
+  it('Right Login', async () => {
     sinon.stub(config , 'execute').resolves(userMock);
-    const result = UserModel.findOne({ where: {email: userMock.email}});
+    const result = await UserModel.findOne({ where: {email: userMock.email}});
 
     expect(result).to.be.deep.equal(tokenMock);
   });
 
-  it('Wrong Login', () => {
-    const err = { type: 'invalidLogin' };
-    sinon.stub(config , 'execute').resolves(err);
-    const result = UserModel.findOne();
+  it('Wrong Login', async () => {
+    sinon.stub(config , 'execute').resolves(null);
+    const result = await UserModel.findOne();
 
-    expect(result).to.be.deep.equal(err);
+    expect(result).to.be.deep.equal(null);
   });
 
   afterEach(function () {

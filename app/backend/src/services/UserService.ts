@@ -1,9 +1,7 @@
-import HttpException from '../interfaces/HttpException';
+import jwt = require('../utils/jwt.util');
 import ILogin from '../interfaces/userInterface';
 import UserModel from '../database/models/UserModel';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const jwt = require('../utils/jwt.util');
+import HttpException from '../interfaces/HttpException';
 
 export default class UserService {
   static async login(login: ILogin): Promise<string> {
@@ -14,7 +12,7 @@ export default class UserService {
       throw new HttpException(401, 'invalid fields');
     }
 
-    const token: string = jwt.createToken(email);
+    const token = jwt.createToken(email);
 
     return token;
   }
