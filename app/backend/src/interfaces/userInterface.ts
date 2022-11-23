@@ -3,4 +3,11 @@ interface ILogin {
   password: string
 }
 
-export default ILogin;
+interface IUser {
+  username: string
+  role: string,
+  email: string,
+  password: string,
+}
+
+export { ILogin, IUser };
