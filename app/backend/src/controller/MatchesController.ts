@@ -32,7 +32,7 @@ export default class MatchesController {
   static async update(req: Request, res: Response) {
     const { id } = req.params;
 
-    const { type, message, status } = await MatchesService.update(id as string, req.body);
+    const { type, message, status } = await MatchesService.update(id, req.body);
     if (type) {
       return res.status(status).json({ message });
     }
