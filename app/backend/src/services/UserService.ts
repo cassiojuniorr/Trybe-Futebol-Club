@@ -18,7 +18,7 @@ export default class UserService {
       return { type: 'Incorrect Filds', message: 'Incorrect email or password', status: 401 };
     }
 
-    const passVal = await bcrypt.compare(password, user.password);
+    const passVal = bcrypt.compareSync(password, user.password);
 
     if (!passVal) {
       return {
