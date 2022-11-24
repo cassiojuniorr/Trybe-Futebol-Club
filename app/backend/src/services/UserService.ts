@@ -10,28 +10,24 @@ export default class UserService {
     const { email, password } = login;
 
     if (!email || !password) {
-      // throw new HttpException(400, 'All fields must be filled');
       return { type: 'fields', message: 'All fields must be filled', status: 400 };
     }
 
     const user = await UserModel.findOne({ where: { email } });
     if (!user) {
-      // throw new HttpException(401, 'User not Found');
-      return { type: 'User not Found', message: 'User not Found', status: 401 };
+      return { type: 'Incorrect Filds', message: 'Incorrect email or password', status: 401 };
     }
 
-    const resp: IUser = user.dataValues;
-    const validation = await bcrypt.compare(password, resp.password);
+    const passVal = await bcrypt.compare(password, user.password);
 
-    if (!validation) {
-      // throw new HttpException(401, 'Incorrect email or password');
+    if (!passVal) {
       return {
-        type: 'Incorrect email or password',
+        type: 'Incorrect Filds',
         message: 'Incorrect email or password',
         status: 401 };
     }
 
-    const token = jwt.createToken(resp.id as number);
+    const token = jwt.createToken(user.id);
 
     return { type: null, message: token, status: 200 };
   }

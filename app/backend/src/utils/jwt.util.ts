@@ -4,10 +4,8 @@ import IReturn from '../interfaces/returnInterface';
 
 require('dotenv/config');
 
-const secret: jwt.Secret = process.env.JWT_SECRET as string;
-
 const createToken = (id: number) => {
-  const token = jwt.sign({ data: { id } }, secret, {
+  const token = jwt.sign({ data: { id } }, process.env.JWT_SECRET || 'jwt_secret', {
     expiresIn: '1d',
     algorithm: 'HS256',
   });
