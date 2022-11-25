@@ -8,13 +8,15 @@ import MatchesModel from '../../database/models/MatchesModel';
 import { allMatches, newMatch, updateMatch } from '../models/MatchesModel/mock/matchesMock';
 import { oneTeam, awayTeam } from '../models/TeamsModel/mock/teamsMock';
 import TeamsModel from '../../database/models/TeamsModel';
+import MatchesService from '../../services/MatchesService';
+import { IMatches } from '../../interfaces/matchesInterface';
 const { app } = new App();
 
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe.only('Teams Controller Test', () => {
+describe('Teams Controller Test', () => {
     let chaiHttpResponse: Response;
 
     describe('Get All', () => {
