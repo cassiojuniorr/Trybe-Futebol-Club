@@ -61,6 +61,6 @@ const updateMatch = {
   awayTeam: 8,
   awayTeamGoals: 9,
   inProgress: true,
-}
+} as unknown as MatchesModel;
 
 export { allMatches, newMatch, updateMatch };

@@ -43,8 +43,10 @@ describe('Matches Service Test', () => {
 
   describe('Insert', function() {
     it('Correct', async () => {
-        sinon.stub(TeamsModel, 'findOne').resolves(oneTeam);
-        sinon.stub(TeamsModel, 'findOne').resolves(awayTeam);
+        sinon.stub(TeamsModel, 'findOne')
+        .onFirstCall().resolves(oneTeam)
+        .onSecondCall().resolves(awayTeam);
+
         sinon.stub(MatchesModel, 'create').resolves(newMatch);
 
         const team = await MatchesService.insert(newMatch);

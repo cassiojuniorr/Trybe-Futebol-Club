@@ -103,7 +103,7 @@ describe('User Controller Test', () => {
         });
     });
 
-    after(()=>{
+    afterEach(()=>{
         (UserModel.findOne as sinon.SinonStub).restore();
     });  
 });
