@@ -10,6 +10,13 @@ export default class LeaderBoardService {
     return orderBoard;
   }
 
+  static async away(): Promise<ILeaderBord[]> {
+    const matches = await MatchesService.getAll('false');
+    const leaderBoard = this.awayLeaderBoard(matches);
+    const orderBoard = this.oderLeaderBoard(leaderBoard);
+    return orderBoard;
+  }
+
   static homeLeaderBoard(matches: IMatches[]): ILeaderBord[] {
     const table: ILeaderBord[] = [];
     matches.forEach(({ homeTeamGoals, awayTeamGoals, teamHome }) => {
@@ -18,6 +25,22 @@ export default class LeaderBoardService {
 
       if (teamI < 0) {
         table.push({ name: teamHome.teamName, ...data });
+      } else {
+        table[teamI] = this.updateGame(table[teamI], data);
+      }
+    });
+
+    return table;
+  }
+
+  static awayLeaderBoard(matches: IMatches[]): ILeaderBord[] {
+    const table: ILeaderBord[] = [];
+    matches.forEach(({ homeTeamGoals, awayTeamGoals, teamAway }) => {
+      const teamI = table.findIndex((tb) => tb.name === teamAway.teamName);
+      const data = this.dataLeader(homeTeamGoals, awayTeamGoals);
+
+      if (teamI < 0) {
+        table.push({ name: teamAway.teamName, ...data });
       } else {
         table[teamI] = this.updateGame(table[teamI], data);
       }

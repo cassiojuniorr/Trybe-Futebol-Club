@@ -7,4 +7,10 @@ export default class LeaderBoardController {
 
     res.status(200).json(leaderBoard);
   }
+
+  static async away(_req: Request, res: Response) {
+    const awayBoard = await LeaderBoardService.away();
+
+    res.status(200).json(awayBoard);
+  }
 }
