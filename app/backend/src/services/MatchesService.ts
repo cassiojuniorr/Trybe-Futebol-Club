@@ -43,7 +43,7 @@ export default class MatchesService {
       };
     }
 
-    const match = MatchesModel.create({
+    const match = await MatchesModel.create({
       homeTeam, homeTeamGoals, awayTeam, awayTeamGoals, inProgress: true,
     }) as unknown as INewMatch;
 
