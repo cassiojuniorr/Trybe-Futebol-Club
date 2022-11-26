@@ -3,6 +3,13 @@ import { ILeaderBord, IGameBord } from '../interfaces/leaderBoardInterface';
 import MatchesService from './MatchesService';
 
 export default class LeaderBoardService {
+  static async get(): Promise<ILeaderBord[]> {
+    const matches = await MatchesService.getAll('false');
+    const leaderBoard = this.allLeaderBoard(matches);
+    const orderBoard = this.oderLeaderBoard(leaderBoard);
+    return orderBoard;
+  }
+
   static async home(): Promise<ILeaderBord[]> {
     const matches = await MatchesService.getAll('false');
     const leaderBoard = this.homeLeaderBoard(matches);
@@ -15,6 +22,31 @@ export default class LeaderBoardService {
     const leaderBoard = this.awayLeaderBoard(matches);
     const orderBoard = this.oderLeaderBoard(leaderBoard);
     return orderBoard;
+  }
+
+  static allLeaderBoard(matches: IMatches[]): ILeaderBord[] {
+    const table: ILeaderBord[] = [];
+    matches.forEach(({ homeTeamGoals, awayTeamGoals, teamHome, teamAway }) => {
+      const homeI = table.findIndex((tb) => tb.name === teamHome.teamName);
+      const homeInfo = this.dataLeader(homeTeamGoals, awayTeamGoals);
+
+      const awayI = table.findIndex((tb) => tb.name === teamAway.teamName);
+      const awayInfo = this.dataLeader(awayTeamGoals, homeTeamGoals);
+
+      if (awayI < 0) {
+        table.push({ name: teamHome.teamName, ...homeInfo });
+      } else {
+        table[homeI] = this.updateGame(table[homeI], homeInfo);
+      }
+
+      if (awayI < 0) {
+        table.push({ name: teamAway.teamName, ...awayInfo });
+      } else {
+        table[awayI] = this.updateGame(table[awayI], awayInfo);
+      }
+    });
+
+    return table;
   }
 
   static homeLeaderBoard(matches: IMatches[]): ILeaderBord[] {
