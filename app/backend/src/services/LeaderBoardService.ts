@@ -37,7 +37,7 @@ export default class LeaderBoardService {
     const table: ILeaderBord[] = [];
     matches.forEach(({ homeTeamGoals, awayTeamGoals, teamAway }) => {
       const teamI = table.findIndex((tb) => tb.name === teamAway.teamName);
-      const data = this.dataLeader(homeTeamGoals, awayTeamGoals);
+      const data = this.dataLeader(awayTeamGoals, homeTeamGoals);
 
       if (teamI < 0) {
         table.push({ name: teamAway.teamName, ...data });
