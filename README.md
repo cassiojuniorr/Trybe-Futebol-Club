@@ -41,7 +41,7 @@ Todos os arquivos desenvolvido estão na pasta app;
 
 - 1° Clone o repositorio, comando: `git clone git@github.com:cassiojuniorr/Trybe-Futebol-Club.git`;
 
-- 2° Rode o comando npm install no seu terminal na raiz da pasta;
+- 2° Rode o comando `npm install` no seu terminal na raiz da pasta;
 
 - 3° Entre na pasta app/backend e rode o comando: `npm run build`;
 
