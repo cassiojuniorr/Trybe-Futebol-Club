@@ -6,8 +6,9 @@ Nesse projeto, eu construi um back-end dockerizado utilizando modelagem de dados
 
 ⚠️ Para adicionar uma partida é necessário ter um `token`, portanto a pessoa deverá estar logada para fazer as alterações. Teremos um relacionamento entre as tabelas `teams` e `matches` para fazer as atualizações das partidas.
 
+## Estrutura do projeto
 <details>
-<summary><strong> Estrutura do projeto</strong></summary><br />
+<summary><strong>Saiba Mais</strong></summary><br />
 
 O projeto é composto de 4 entidades importantes para sua estrutura:
 
@@ -34,4 +35,18 @@ O projeto é composto de 4 entidades importantes para sua estrutura:
 </details>
 
 ## Files: 📄
-Todos os arquivos desenvolvido por min estão na pasta app/backend;
+Todos os arquivos desenvolvido estão na pasta app;
+
+## Como rodar o projeto:
+
+- 1° Clone o repositorio, comando: `git clone git@github.com:cassiojuniorr/Trybe-Futebol-Club.git`;
+
+- 2° Rode o comando npm install no seu terminal na raiz da pasta;
+
+- 3° Entre na pasta app/backend e rode o comando: `npm run build`;
+
+- 4° Volte para a pasta raiz;
+
+- 5° Suba os container rodando o comando: `npm run compose:up`;
+
+- 6° Quando quiser para basta rodar o comando: `npm run compose:down`;
